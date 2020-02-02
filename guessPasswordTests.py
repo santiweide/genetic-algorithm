@@ -3,9 +3,14 @@ import genetic
 import unittest
 import random
 
+#从字符集合中选取合适字符使得最终字符串与给定字符串相同
+
 def display(candidate, start_time):
     time_diff = datetime.datetime.now() - start_time
-    print("{0}\t{1}\t{2}".format(candidate.Genes, candidate.Fitness, str(time_diff)))
+    print("{0}\t{1}\t{2}".format(
+        ''.join(candidate.Genes),
+        candidate.Fitness,
+        str(time_diff)))
 
 
 def get_fitness(genes, target):
@@ -35,7 +40,7 @@ class GuessPasswordTests(unittest.TestCase):
 
         optimal_fitness = len(target)
         best = genetic.get_best(fnGetFitness, len(target), optimal_fitness, self.gene_set, fnDisplay)
-        self.assertEqual(best.Genes, target)
+        self.assertEqual(''.join(best.Genes), target)
 
 
 if __name__ == '__main__':

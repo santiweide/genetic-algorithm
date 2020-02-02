@@ -39,22 +39,20 @@ def _generate_parent(length, gene_set,get_fitness):
         # 一位一位随机也可以，但是长一点比较可以体现不重复随机的优势？其实用带重复随机的也可以。
         sample_size = min(length - len(genes), len(gene_set))
         genes.extend(random.sample(gene_set, sample_size))
-    genes = ''.join(genes)
     fitness = get_fitness(genes)
     return Chromosome(genes, fitness)
 
 
-def _mutate(parent, geneSet, get_fitness):
+def _mutate(parent, gene_set, get_fitness):
+    child_genes = parent.Genes[:]
     index = random.randrange(0, len(parent.Genes))
-    child_genes = list(parent.Genes)
-    new_gene, alternate = random.sample(geneSet, 2)
+    new_gene, alternate = random.sample(gene_set, 2)
     if new_gene == child_genes[index]:
         child_genes[index] = alternate
     else:
         child_genes[index] = new_gene
-    genes = ''.join(child_genes)
-    fitness = get_fitness(genes)
-    return Chromosome(genes, fitness)
+    fitness = get_fitness(child_genes)
+    return Chromosome(child_genes, fitness)
 
 
 def get_best(get_fitness, target_len, optimal_fitness, gene_set, display):
