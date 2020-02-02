@@ -43,6 +43,7 @@ def _generate_parent(length, gene_set,get_fitness):
     return Chromosome(genes, fitness)
 
 
+# 产生新的数据
 def _mutate(parent, gene_set, get_fitness):
     child_genes = parent.Genes[:]
     index = random.randrange(0, len(parent.Genes))
@@ -55,17 +56,37 @@ def _mutate(parent, gene_set, get_fitness):
     return Chromosome(child_genes, fitness)
 
 
+# 从基因池里面选择Fitness更高的child作为newchild
+def _get_improvement(new_child, generate_parent):
+    best_parent = generate_parent()
+    yield best_parent
+    while True:
+        child = new_child(best_parent)
+        # p > c 说明子代没有更fit的
+        if best_parent.Fitness > child.Fitness:
+            continue
+        # c == p(即p <= c && c <= p)
+        # 说明 有了一个和best parent权值相同的child，
+        # 我们选择更新parent但是不返回这个值
+        if not child.Fitness > best_parent.Fitness:
+            best_parent = child
+            continue
+        yield child
+        best_parent = child
+
+
+# _get_improvement抽象了选择更fit自代的过程，
+# 这样get_best就只需要对得到的优秀自带进行显示和判断是否达到返回条件
 def get_best(get_fitness, target_len, optimal_fitness, gene_set, display):
     random.seed()
-    best_parent = _generate_parent(target_len, gene_set, get_fitness)
-    display(best_parent)
-    if best_parent.Fitness >= optimal_fitness:
-        return best_parent
-    while True:
-        child = _mutate(best_parent, gene_set, get_fitness)
-        if best_parent.Fitness >= child.Fitness:
-            continue
-        display(child)
-        if child.Fitness >= optimal_fitness:
-            return child
-        best_parent = child
+
+    def fnMutate(parent):
+        return _mutate(parent, gene_set, get_fitness)
+
+    def fnGenerateParent():
+        return _generate_parent(target_len, gene_set, get_fitness)
+
+    for improvement in _get_improvement(fnMutate, fnGenerateParent):
+        display(improvement)
+        if not optimal_fitness > improvement.Fitness:
+            return improvement

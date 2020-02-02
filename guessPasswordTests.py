@@ -3,7 +3,8 @@ import genetic
 import unittest
 import random
 
-#从字符集合中选取合适字符使得最终字符串与给定字符串相同
+# 从字符集合中选取合适字符使得最终字符串与给定字符串相同
+
 
 def display(candidate, start_time):
     time_diff = datetime.datetime.now() - start_time
