@@ -5,7 +5,7 @@ import genetic
 
 # 利用遗传算法的思想生成一个递增数列，数列里面的数字来自[range(100)]
 def display(candidate, start_time):
-    time_diff = datetime.datetime.now()
+    time_diff = datetime.datetime.now() - start_time
     print("{0}\t=> {1}\t{2}".format(
         ', '.join(map(str, candidate.Genes)),
         candidate.Fitness,

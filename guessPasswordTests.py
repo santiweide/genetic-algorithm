@@ -30,7 +30,7 @@ class GuessPasswordTests(unittest.TestCase):
     def test_benchmark(self):
         genetic.Benchmark.run(self.test_random)
 
-    def guess_password(self,target):
+    def guess_password(self, target):
         start_time = datetime.datetime.now()
 
         def fnGetFitness(genes):
