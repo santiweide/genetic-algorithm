@@ -37,3 +37,7 @@ class OneMaxTests(unittest.TestCase):
 
     def test_benchmark(self):
         genetic.Benchmark.run(lambda : self.test(4000))
+
+
+if __name__ == '__main__':
+    unittest.main()

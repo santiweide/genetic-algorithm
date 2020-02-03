@@ -99,3 +99,6 @@ class EightQueensTests(unittest.TestCase):
 
     def test_benchmark(self):
         genetic.Benchmark.run(lambda: self.test(20))
+
+if __name__ == '__main__':
+    unittest.main()

@@ -74,3 +74,7 @@ class SortedNumberTests(unittest.TestCase):
         best = genetic.get_best(fnGetFitness, total_numbers,
                                 optimal_fitness, gene_set, fnDisplay)
         self.assertTrue(not optimal_fitness > best.Fitness)
+
+
+if __name__ == '__main__':
+    unittest.main()
